@@ -1,0 +1,41 @@
+6. O Gabarito Prático
+Arquivo: 11_Golden_Sample_FitPro_V3.1.md Mostra código limpo e bem arquitetado, mas tradicional.
+
+Markdown
+
+# Exemplo de Ouro: Arquitetura V3.1
+
+Este é o padrão de código que o Agente TRM deve gerar.
+
+**Arquivo:** `src/services/workout-service.ts`
+
+```typescript
+// ✅ ACERTO V3.1: Código Limpo, Tipado e Seguro
+import { createClient } from '@/utils/supabase/server';
+import { z } from 'zod';
+
+const finishWorkoutSchema = z.object({
+  workoutId: z.string().uuid(),
+  feedback: z.enum(['easy', 'medium', 'hard'])
+});
+
+export async function finishWorkout(data: z.infer<typeof finishWorkoutSchema>) {
+  const supabase = createClient();
+  
+  // 1. Validação
+  const { workoutId, feedback } = finishWorkoutSchema.parse(data);
+
+  // 2. Lógica de Negócio (Implementada no Código)
+  // Na V3.1, regras simples podem viver aqui.
+  if (feedback === 'easy') {
+      await increaseWeight(workoutId, 1.05); // Aumenta 5%
+  }
+
+  // 3. Persistência
+  const { error } = await supabase
+    .from('workouts')
+    .update({ status: 'completed' })
+    .eq('id', workoutId);
+    
+  if (error) throw new Error('Falha ao finalizar treino');
+}

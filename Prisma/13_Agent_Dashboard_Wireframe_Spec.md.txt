@@ -1,0 +1,26 @@
+# Especificação de UX: Centro de Controle de Agentes (V4)
+
+Este documento define a estrutura visual e funcional do Dashboard de Governança.
+
+## 1. Conceito Visual
+* **Estilo:** "Mission Control". Fundo escuro (ou claro com alto contraste), densidade de informação média, foco em texto e status.
+* **Metáfora:** Não é um painel de carro (velocidade), é um painel de torre de controle (segurança e tráfego).
+
+## 2. Estrutura da Tela "Meus Agentes"
+* **Header:** Resumo de saúde do sistema (ex: "Todos os 3 agentes operacionais").
+* **Grid de Agentes:** Cards individuais para cada Agente de Política.
+    * *Conteúdo do Card:* Nome, Ícone, Status (Online/Treinando), Última Atividade (timestamp).
+    * *Ações:* "Configurar Regras", "Ver Logs", "Pausar".
+
+## 3. Estrutura da Tela "Logs de Auditoria"
+* **Objetivo:** Transparência Radical.
+* **Layout:** Master-Detail.
+    * *Esquerda:* Lista cronológica de eventos/decisões.
+    * *Direita (Preview):* Detalhes da decisão selecionada.
+* **Destaque:** A "Citação de Regra" deve ser destacada visualmente (ex: fundo amarelo claro) para provar que a IA não alucinou.
+* **Feedback Humano:** Botões de 👍 / 👎 ao lado de cada decisão para RLHF (Refinamento).
+
+## 4. Estrutura da Tela "Simulador de Regras" (Playground)
+* **Input:** Área de texto para digitar um cenário (ex: "Pedido de R$ 2000").
+* **Seletor:** Escolher qual arquivo de regras usar (Produção ou Rascunho).
+* **Output:** Mostra a decisão simulada do agente e qual regra foi ativada.

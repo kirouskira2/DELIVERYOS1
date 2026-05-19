@@ -1,0 +1,34 @@
+3. O Plano de Ação
+Arquivo: 04_ProjectManifest_Template_V3.1.json Focado em funcionalidades de SaaS clássicas, não em agentes.
+
+JSON
+
+{
+  "projectManifest": {
+    "templateVersion": "3.1.0 (Master Craftsman)",
+    "projectName": "Prisma V3.1 - High Quality SaaS",
+    "phases": [
+      {
+        "phaseName": "1. Fundação",
+        "tasks": [
+          { "taskId": "setup_environment", "description": "Configurar Next.js, Tailwind, Shadcn, Tremor e Supabase Client." },
+          { "taskId": "setup_database", "description": "Criar tabelas SQL com RLS rigoroso e tipos fortes." }
+        ]
+      },
+      {
+        "phaseName": "2. Funcionalidades Core (Backend)",
+        "tasks": [
+          { "taskId": "implement_auth", "description": "Implementar fluxo de auth completo e protegido." },
+          { "taskId": "implement_crud_logic", "description": "Implementar os serviços de negócio (ex: WorkoutService) com validação Zod e tratamento de erros." }
+        ]
+      },
+      {
+        "phaseName": "3. Interface Premium (Frontend)",
+        "tasks": [
+          { "taskId": "refactor_stitch_ui", "description": "Refatorar o HTML do Stitch para componentes React usando o catálogo MCP." },
+          { "taskId": "connect_ui_data", "description": "Conectar os componentes visuais (Gráficos Tremor) aos dados reais do Supabase." }
+        ]
+      }
+    ]
+  }
+}

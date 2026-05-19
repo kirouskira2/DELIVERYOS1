@@ -1,0 +1,77 @@
+{
+  "projectManifest": {
+    "templateVersion": "4.1.0 (Hybrid Architecture)",
+    "projectName": "Prisma AI Platform",
+    "description": "Plano de implementação para a Plataforma Prisma AI, seguindo a arquitetura de Governança V4 (Agentes de Política + RAG).",
+    "phases": [
+      {
+        "phaseName": "Fase 1: Fundação e Infraestrutura de Conhecimento",
+        "tasks": [
+          {
+            "taskId": "infra_setup_build_time",
+            "description": "Configurar o ambiente de desenvolvimento local com Docker Compose. Serviços obrigatórios: 'prisma-orchestrator' (LangGraph), 'flowise' (RAG Manager), 'embedding-service' (Ollama/Gemma-2b local) e 'vector-db' (pgvector)."
+          },
+          {
+            "taskId": "infra_setup_run_time",
+            "description": "Configurar o projeto no Supabase. Habilitar Auth, Database e Edge Functions. Criar o bucket 'prisma-rules' no Storage para armazenar os documentos de regras de negócio (RAG do Prisma)."
+          },
+          {
+            "taskId": "db_schema_migration",
+            "description": "Executar o script SQL '02_Initial_Schema_V4.sql' no Supabase para criar a estrutura de dados com RLS e tabelas de auditoria."
+          }
+        ]
+      },
+      {
+        "phaseName": "Fase 2: Agentes de Política (O Cérebro de Governança)",
+        "tasks": [
+          {
+            "taskId": "agent_core_service",
+            "description": "Criar a Edge Function base 'AbstractPolicyAgent'. Ela deve implementar a lógica de consulta à Google File Search API (ou RAG interno) e retornar decisões estruturadas (JSON) com citações de documentos."
+          },
+          {
+            "taskId": "implement_project_policy_agent",
+            "description": "Implementar o 'Agente de Política de Projetos'. Regra de Negócio: Validar se o usuário tem cota de tokens e se o escopo do projeto (do 'jsonformulario.txt') é seguro para geração. A regra deve ser lida de um arquivo 'regras_projetos.txt'."
+          },
+          {
+            "taskId": "implement_security_agent",
+            "description": "Implementar o 'Agente de Política de Segurança'. Regra de Negócio: Analisar os inputs do usuário em busca de tentativas de Prompt Injection antes de processar qualquer criação."
+          }
+        ]
+      },
+      {
+        "phaseName": "Fase 3: Interface e Experiência (Design-First)",
+        "tasks": [
+          {
+            "taskId": "ui_setup_and_prototype",
+            "description": "Inicializar o projeto Next.js (App Router). Salvar os arquivos 'landingpage.txt' e 'dashboard.txt' como 'prototype_landing.html' e 'prototype_dashboard.html' na raiz para servir de gabarito."
+          },
+          {
+            "taskId": "ui_refactor_landing",
+            "description": "Refatorar o 'prototype_landing.html' para a página 'src/app/page.tsx'. Substituir o HTML estático por componentes MCP Magic UI (Hero, Marquee, CTA) conforme o registro '03_MCP_Component_Registry.md'."
+          },
+          {
+            "taskId": "ui_refactor_dashboard",
+            "description": "Refatorar o 'prototype_dashboard.html' para o layout 'src/app/(dashboard)/layout.tsx' e página 'page.tsx'. Conectar os Cards de KPI e Gráficos aos dados reais do Supabase (tabela 'project_configurations' e 'usage_metrics') usando componentes Tremor."
+          },
+          {
+            "taskId": "ui_agent_control_center",
+            "description": "Implementar a tela 'Centro de Controle' ('/agents'). Deve permitir o upload de novas regras para o bucket 'prisma-rules' e visualizar os logs da tabela 'audit_logs'."
+          }
+        ]
+      },
+      {
+        "phaseName": "Fase 4: Governança e Entrega",
+        "tasks": [
+          {
+            "taskId": "audit_final_run",
+            "description": "Executar a auto-auditoria final do TRM. Verificar se todas as regras de negócio (cotas, segurança) estão delegadas aos Agentes de Política e se o RLS está ativo."
+          },
+          {
+            "taskId": "deploy_production",
+            "description": "Configurar o pipeline de CI/CD na Vercel e realizar o deploy de produção."
+          }
+        ]
+      }
+    ]
+  }
+}

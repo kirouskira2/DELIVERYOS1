@@ -1,0 +1,16 @@
+2. A Infraestrutura Técnica
+Arquivo: 02_Infrastructure_Stack.md Idêntico à V4 na parte de Build, mas simplificado no Run-Time.
+
+Markdown
+
+# Especificação de Infraestrutura Prisma V3.1
+
+## 1. Stack de Construção (A Fábrica)
+* **Orquestrador:** LangGraph (Python).
+* **Memória:** pgvector + Flowise.
+* **Embedding:** Gemma 2b (Local via Docker/Ollama).
+
+## 2. Stack do Produto Gerado (O SaaS)
+* **Frontend:** Next.js 14 (App Router), Tailwind CSS, Framer Motion.
+* **Backend:** Supabase (PostgreSQL, Auth, Row Level Security).
+* **Diferença V3.1:** O produto final é um SaaS tradicional de alta qualidade (monolito modular ou serverless), sem a complexidade de "Agentes de Política" ou RAG do cliente.
