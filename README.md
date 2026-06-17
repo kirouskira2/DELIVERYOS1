@@ -88,3 +88,19 @@ O frontend também consome as credenciais do Supabase para gerenciar a autentica
    flutter run -d chrome
    ```
    *(Para rodar em um emulador Android ou iOS, garanta que ele esteja aberto e omita a flag `-d chrome`)*
+
+---
+
+## Passo 4: Produção e Hospedagem (AWS EC2)
+
+O projeto também está configurado para **Deploy em Produção** em uma instância da AWS (Amazon Web Services).
+
+- **🌐 Acesso ao Sistema Ao Vivo:** [https://54.221.132.160.sslip.io](https://54.221.132.160.sslip.io)
+
+### Arquitetura de Containerização
+O ambiente de produção foi completamente orquestrado utilizando **Docker e Docker Compose**, seguindo a seguinte estrutura na AWS EC2 (t3.micro):
+
+1. **Backend em Dart (Container 1):** Compilado para binário executável AOT (*Ahead-of-Time*) gerando uma imagem Docker `slim` extremamente rápida e com baixo uso de memória.
+2. **Nginx Reverse Proxy (Container 2):** Configurado para servir os arquivos estáticos do **Flutter Web**, aplicar criptografia SSL/TLS (HTTPS Let's Encrypt), implementar compressão Gzip e redirecionar internamente rotas da API (`/api/`) para o container do backend.
+
+Isso garante alta performance, segurança e que o projeto seja independente de plataforma, pronto para ser executado em qualquer ambiente que suporte containers Docker. Consulte o relatório oficial de infraestrutura na pasta `docs/` para mais detalhes técnicos.
