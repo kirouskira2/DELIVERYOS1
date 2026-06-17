@@ -1,0 +1,10 @@
+.dart_tool/
+.dart_frog/
+build/
+test/
+.vscode/
+.git/
+.gitignore
+README.md
+analysis_options.yaml
+*.md

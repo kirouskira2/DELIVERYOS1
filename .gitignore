@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+*.pem
+
+# Agent AI / IDE
+.agents/
+.mcp.json
+skills-lock.json

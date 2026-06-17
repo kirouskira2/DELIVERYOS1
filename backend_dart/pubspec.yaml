@@ -10,6 +10,7 @@ dependencies:
   dart_frog: ^1.1.0
   get_it: ^9.2.1
   supabase: ^2.10.6
+  dotenv: ^4.2.0
 
 dev_dependencies:
   dart_frog_lint: ^0.1.0

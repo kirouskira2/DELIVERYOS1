@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dotenv/dotenv.dart';
 
 import 'package:backend_dart/repositories/order_repository.dart';
 import 'package:backend_dart/repositories/report_repository.dart';
@@ -13,12 +14,13 @@ import 'package:supabase/supabase.dart';
 final getIt = GetIt.instance;
 
 bool _isInitialized = false;
+final _env = DotEnv(includePlatformEnvironment: true);
 
 /// Lê uma variável de ambiente obrigatória.
 /// Lança [StateError] imediatamente se a variável não estiver configurada,
 /// garantindo falha rápida e ruidosa em vez de usar credenciais hard-coded.
 String _requireEnv(String key) {
-  final value = Platform.environment[key];
+  final value = _env[key];
   if (value == null || value.isEmpty) {
     throw StateError(
       '❌ Variável de ambiente "$key" não configurada. '
@@ -33,6 +35,13 @@ String _requireEnv(String key) {
 /// Padrão: LazySingleton — cada instância é criada apenas uma vez.
 void setupDependencyInjection() {
   if (_isInitialized) return;
+
+  // Carrega o arquivo .env
+  try {
+    _env.load(['.env']);
+  } catch (e) {
+    print('Aviso: Não foi possível carregar o arquivo .env: $e');
+  }
 
   // 1. Supabase Client (Singleton base)
   // As variáveis de ambiente SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY
